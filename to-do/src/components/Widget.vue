@@ -8,11 +8,19 @@
                         div {{ month }}
                         div {{ year }}
                 div.day.d-flex.justify-content-end.align-items-center {{ day }}
-            div.list.d-flex.d-flex.flex-column
-                li.item.completed(v-for="item in completed") {{ item.name }}
-                #{'draggable'}(v-model="todo" @start="drag=true" @end="drag=false")
-                    div.item.todo(v-for="element in todo" :key="element.id") {{ element.name }}
-            div.footer.d-flex
+            div.list.d-flex.flex-column
+                li.item.completed.d-flex(v-for="item in completed")
+                    div.name {{ item.name }}
+                    div.checked
+                        div.circle(@click="changeStatus({item: item, array: 'todo'})")
+            #{'draggable'}(v-model="todo" @start="drag=true" @end="drag=false" class="d-flex flex-column")
+               li.item.todo(v-for="item in todo" :key="item.id")
+                    div.name {{ item.name }}
+                    div.check
+                        div.circle(@click="changeStatus({item: item, array: 'completed'})")
+            div.footer.d-flex.justify-content-center
+                div.button.d-flex.align-items-end
+                    button
 </template>
 
 <script>
@@ -24,8 +32,9 @@
         name: "Widget",
         methods: {
             ...mapMutations({
-              dateMut: 'GET_DATE',
-              listMut: 'UPDATE_LIST'
+                dateMut: 'GET_DATE',
+                orderMut: 'UPDATE_ORDER',
+                updateMut: 'UPDATE_LIST'
             }),
             ...mapGetters({
                 dayGett : 'day',
@@ -34,7 +43,10 @@
                 yearGett : 'year',
                 completedGett : 'completed',
                 todoGett : 'todo'
-            })
+            }),
+            changeStatus(item) {
+                return this.updateMut(item)
+            }
         },
         computed: {
             day() {
@@ -57,7 +69,7 @@
                     return this.todoGett()
                 },
                 set(value) {
-                    return this.listMut(value)
+                    return this.orderMut(value)
                 }
             }
         },

@@ -18,29 +18,29 @@ export const store = new Vuex.Store({
           completed: [
               {
                   "id" : 1,
-                  "name" : "Wynieść śmieci"
+                  "name" : "1"
               },
               {
                   "id" : 2,
-                  "name" : "Wynieść psa"
+                  "name" : "2"
               },
               {
                   "id" : 3,
-                  "name" : "Wynieść rower"
+                  "name" : "3"
               }
           ],
           todo: [
               {
-                  "id" : 1,
-                  "name" : "Umyć śmieci"
+                  "id" : 4,
+                  "name" : "4"
               },
               {
-                  "id" : 2,
-                  "name" : "Umyć psa"
+                  "id" : 5,
+                  "name" : "5"
               },
               {
-                  "id" : 3,
-                  "name" : "Umyć rower"
+                  "id" : 6,
+                  "name" : "6"
               }
           ],
       }
@@ -52,8 +52,6 @@ export const store = new Vuex.Store({
       year: state => state.today.year,
       completed: state => state.tasks.completed,
       todo: state => state.tasks.todo,
-      completed: state => state.tasks.completed,
-      todo: state => state.tasks.todo
   },
   mutations: {
       GET_DATE: (state) => {
@@ -62,8 +60,19 @@ export const store = new Vuex.Store({
           state.today.month = moment().format('MMMM').toUpperCase()
           state.today.year = moment().format('YYYY')
       },
-      UPDATE_LIST: (state, payload) => {
+      UPDATE_ORDER: (state, payload) => {
           state.tasks.todo = payload
+      },
+      UPDATE_LIST: (state, payload) => {
+          if(payload.array === 'todo') {
+              state.tasks.todo.push(payload.item);
+              state.tasks.completed.splice(state.tasks.completed.indexOf(payload.item),1);
+
+          }
+          if(payload.array === 'completed') {
+              state.tasks.completed.push(payload.item)
+              state.tasks.todo.splice(state.tasks.todo.indexOf(payload.item),1);
+          }
       }
   },
   actions: {

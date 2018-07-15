@@ -1,3 +1,5 @@
+$c-green: #47DF9A
+
 body
   background: #F0EFEA
   font-family: 'Poppins', sans-serif
@@ -15,19 +17,26 @@ body
   margin-top: 50px
   background-color: white
   border: 4em white solid
+  border-bottom: 0
+  -moz-box-shadow: 0 0 5px lightgray
+  -webkit-box-shadow: 0 0 5px lightgray
+  box-shadow: 0 0 5px lightgray
 
 .widget
   width: 100%
 
 .header
-  height: 10%
+  flex: 10% 0 0
   color: gray
+  font-weight: bold
+  margin-bottom: 2em
 
 .list
-  height: 80%
+  flex: 80% 0 0
 
 .footer
-  height: 10%
+  flex: 10% 0 0
+  height: 50px
 
 .date
   flex: 50% 0 0
@@ -42,15 +51,103 @@ body
 .monthyear
   font-size: 18px
 
-.list
-  margin-top: 2em
-
 .item
   padding-top: 15px
   list-style-type: none
+  padding-bottom: 15px
+  display: flex
 
 .completed
-  cursor: default
+  cursor: text
+  color: silver
 
-.todo
+.button
+  position: absolute
+
+button
+  background: $c-green
+  position: relative
+  top: 5px
+  height: 5.5em
+  width: 5.5em
+  border-radius: 50%
+  border: 0.5px solid lightgray
+  outline: hidden
+  -moz-box-shadow: 0 0 5px lightgray
+  -webkit-box-shadow: 0 0 5px lightgray
+  box-shadow: 0 0 5px lightgray
   cursor: pointer
+
+
+button:focus
+  outline: none
+
+button:after
+  content: "\002B"
+  font-size: 40px
+  color: #22c37b
+
+.name
+  display: flex
+  flex: 80% 0 0
+  justify-content: flex-start
+
+.check
+  display: flex
+  flex: 20% 0 0
+  justify-content: flex-end
+
+.check .circle
+  height: 25px
+  width: 25px
+  background-color: white
+  cursor: pointer
+  border-radius: 50%
+  border: 4px solid lightgray
+  position: relative
+
+.check .circle:hover
+  height: 25px
+  width: 25px
+  background-color: white
+  cursor: pointer
+  border: 4px solid $c-green
+
+.check .circle:hover:after
+  transform: rotate(45deg)
+  border: solid black
+  border-width: 0 3px 3px 0
+  width: 6px
+  height: 12px
+  content: ''
+  right: 5px
+  top: 2px
+  position: absolute
+
+.checked
+  display: flex
+  flex: 20% 0 0
+  justify-content: flex-end
+
+.checked .circle
+  height: 25px
+  width: 25px
+  background-color: white
+  cursor: pointer
+  border-radius: 50%
+  border: 4px solid $c-green
+  position: relative
+
+.checked .circle:hover
+  height: 25px
+  width: 25px
+  background-color: white
+  cursor: pointer
+  border: 4px solid lightgray
+
+.checked .circle:hover:after
+  position: absolute
+  content: "\274c"
+  font-size: 10px
+  left: 3px
+  top: 2px
