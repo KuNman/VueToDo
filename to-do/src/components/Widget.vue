@@ -8,29 +8,32 @@
                         div {{ month }}
                         div {{ year }}
                 div.day.d-flex.justify-content-end.align-items-center {{ day }}
-            div.list.d-flex
+            div.list.d-flex.d-flex.flex-column
+                li.item.completed(v-for="item in completed") {{ item.name }}
+                #{'draggable'}(v-model="todo" @start="drag=true" @end="drag=false")
+                    div.item.todo(v-for="element in todo" :key="element.id") {{ element.name }}
             div.footer.d-flex
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
     import { mapMutations } from 'vuex'
     import { mapGetters } from 'vuex'
+    import draggable from 'vuedraggable'
 
     export default {
         name: "Widget",
         methods: {
-            ...mapActions([
-                'increment',
-            ]),
             ...mapMutations({
-              dateMut: 'GET_DATE'
+              dateMut: 'GET_DATE',
+              listMut: 'UPDATE_LIST'
             }),
             ...mapGetters({
                 dayGett : 'day',
                 dayNoGett : 'dayno',
                 monthGett : 'month',
-                yearGett : 'year'
+                yearGett : 'year',
+                completedGett : 'completed',
+                todoGett : 'todo'
             })
         },
         computed: {
@@ -46,9 +49,23 @@
             year() {
                 return this.yearGett()
             },
+            completed() {
+                return this.completedGett()
+            },
+            todo: {
+                get() {
+                    return this.todoGett()
+                },
+                set(value) {
+                    return this.listMut(value)
+                }
+            }
         },
         created() {
-            return this.dateMut()
+            this.dateMut();
+        },
+        components: {
+            draggable
         }
     }
 </script>
