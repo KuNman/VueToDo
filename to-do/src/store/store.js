@@ -43,7 +43,7 @@ export const store = new Vuex.Store({
                   "name" : "6"
               }
           ],
-      }
+      },
   },
   getters: {
       day: state => state.today.day,
@@ -73,11 +73,16 @@ export const store = new Vuex.Store({
               state.tasks.completed.push(payload.item)
               state.tasks.todo.splice(state.tasks.todo.indexOf(payload.item),1);
           }
+      },
+      ADD_NEW: (state, payload) => {
+          let xMax = Math.max(...Array.from(state.tasks.todo, o => o.id));
+          let maxId = state.tasks.todo.find(o => o.id === xMax);
+          let newTask = {
+                "id": maxId + 1,
+                "name": payload
+          }
+          state.tasks.todo.push(newTask);
       }
   },
-  actions: {
-  },
-  modules: {
-  }
 })
 

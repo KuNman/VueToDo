@@ -11,16 +11,23 @@
             div.list.d-flex.flex-column
                 li.item.completed.d-flex(v-for="item in completed")
                     div.name {{ item.name }}
-                    div.checked
+                    div.checked.d-flex
                         div.circle(@click="changeStatus({item: item, array: 'todo'})")
-            #{'draggable'}(v-model="todo" @start="drag=true" @end="drag=false" class="d-flex flex-column")
+            #{'draggable'}(v-bind:model="todo" @start="drag=true" @end="drag=false" class="d-flex flex-column")
                li.item.todo(v-for="item in todo" :key="item.id")
                     div.name {{ item.name }}
                     div.check
                         div.circle(@click="changeStatus({item: item, array: 'completed'})")
+            div.item(:class="{ hidden }")
+                div.new.d-flex
+                    div.input.d-flex
+                        input.autofocus(v-model="text" placeholder='New task')
+                    div.actions.d-flex
+                        button.d-flex.save(@click="addNew()")
+                        button.d-flex.cancel(@click="hidden = !hidden")
             div.footer.d-flex.justify-content-center
                 div.button.d-flex.align-items-end
-                    button
+                    button.add(@click="hidden = !hidden")
 </template>
 
 <script>
@@ -30,11 +37,18 @@
 
     export default {
         name: "Widget",
+        data() {
+            return {
+                hidden: true,
+                text: ''
+            }
+        },
         methods: {
             ...mapMutations({
                 dateMut: 'GET_DATE',
                 orderMut: 'UPDATE_ORDER',
-                updateMut: 'UPDATE_LIST'
+                updateMut: 'UPDATE_LIST',
+                addNewMut: 'ADD_NEW'
             }),
             ...mapGetters({
                 dayGett : 'day',
@@ -46,6 +60,9 @@
             }),
             changeStatus(item) {
                 return this.updateMut(item)
+            },
+            addNew: function(){
+                return this.addNewMut(this.text)
             }
         },
         computed: {
