@@ -62,7 +62,11 @@
                 return this.updateMut(item)
             },
             addNew: function(){
-                return this.addNewMut(this.text)
+                if(this.text.length > 0) {
+                    return this.addNewMut(this.text)
+                } else {
+                    this.text = 'Text too short'
+                }
             }
         },
         computed: {
