@@ -1,3 +1,7 @@
+Simple To Do List App.
+![Screenshot](photo.png)
+
+
 # vue-cli
 
 > A Vue.js project
